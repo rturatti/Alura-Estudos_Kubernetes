@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume
+  labels:
+    name: pod-volume
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:latest
+    volumeMounts:
+      - mountPath: /site
+        name: segundo-volume
+    ports:
+      - containerPort: 80
+  - name: jenkins-container
+    image: jenkins:2.60.3-alpine
+    volumeMounts:
+      - mountPath: /jenkins
+        name: segundo-volume
+  volumes:
+    - name: segundo-volume
+      hostPath:
+        path: /tmp/k3dvol/segundo-volume
+        type: DirectoryOrCreate
